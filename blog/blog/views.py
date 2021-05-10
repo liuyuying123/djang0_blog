@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.template import loader
 # Create your views here.
 from django.http import HttpResponse
@@ -12,12 +12,9 @@ def index(request):
     post_list=Post.objects.all().order_by('-created_time')
     return render(request,'blog/index.html',context={'post_list':post_list})
 
-# def details(request,question_id):
-#     try:
-#         question=Question.objects.get(pk=question_id)
-#     except Question.DoesNotExist:
-#         raise Http404("问卷不存在")
-#     return render(request,'polls/detail.html',{'question':question})
+def detail(request,pk):
+    post=get_object_or_404(Post,pk=pk)
+    return render(request,'blog/details.html',context={'post':post})
 
 # def results(request,question_id):
 #     return HttpResponse("正在查看问卷%s的结果。"%question_id)
