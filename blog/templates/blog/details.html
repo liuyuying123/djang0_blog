@@ -14,30 +14,23 @@
       </div>
     </header>
     <div class="entry-content clearfix">
-      {{ post.text_body }}
+      {{ post.text_body|safe }}<!-- safe过滤器，告诉djangp这段文本是安全的 -->
+      <!-- safe 是 django 模板系统中的过滤器（Filter），可以简单地把它看成是一种函数，
+      其作用是作用于模板变量，将模板变量的值变为经过滤器处理过后的值。
+      例如这里 {{ post.body|safe }}，本来 {{ post.body }}经模板系统渲染后应该显示 body 本身的值，
+      但是在后面加上 safe 过滤器后，渲染的值不再是 body 本身的值，而是由 safe 函数处理后返回的值。
+      过滤器的用法是在模板变量后加一个 | 管道符号，再加上过滤器的名称。可以连续使用多个过滤器-->
     </div>
   </article>
 {% endblock main %}
 
+
+
 {% block toc %}
+  {% if post.toc %}
     <div class="widget widget-content">
-        <h3 class="widget-title">文章目录</h3>
-        <ul>
-            <li>
-                <a href="#">教程特点</a>
-            </li>
-            <li>
-                <a href="#">谁适合这个教程</a>
-            </li>
-            <li>
-                <a href="#">在线预览</a>
-            </li>
-            <li>
-                <a href="#">资源列表</a>
-            </li>
-            <li>
-                <a href="#">获取帮助</a>
-            </li>
-        </ul>
+      <h3 class="widget-title">文章目录</h3>
+      {{post.toc|safe }}
     </div>
-    {% endblock toc %}
+  {% endif %}
+{% endblock toc %}

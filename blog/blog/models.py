@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
+import markdown
+from django.utils.html import strip_tags
 # Create your models here.
 #对应的数据库表
 
@@ -63,7 +65,20 @@ class Post(models.Model):
     # 通过覆写这个方法，在 model 被 save 到数据库前指定 modified_time 的值为当前时间不就可以了？
     def save(self,*args,**kwargs):
         self.modified_time=timezone.now()
+        md=markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+        ])
+        #先将markdown文本渲染成HTML文本
+        #strip_tags去掉HTML文本的全部HTML标签
+        #从文本摘取前54个字符赋值给abstraction
+        if self.text_abstract=='':
+            self.text_abstract=strip_tags(md.convert(self.text_body))[:54]
+
         super().save(*args,**kwargs)
+
+        # truncatechars 过滤器可以截取模板变量值的前 N 个字符显示。
+        # {{ post.body|truncatechars:54 }}可以得到同样的效果
 
     def get_absolute_url(self):
         return reverse('blog:detail',kwargs={'pk':self.pk})#reverse函数解析这个detail视图函数对应的url，
