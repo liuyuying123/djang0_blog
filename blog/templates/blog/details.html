@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load comments_extras %}
 
 {% block main %}
 <article class="post post-{{ post.pk }}">
@@ -9,7 +10,7 @@
         <span class="post-date"><a href="#"><time class="entry-date"
                                                   datetime="{{ post.created_time }}">{{ post.created_time }}</time></a></span>
         <span class="post-author"><a href="#">{{ post.author }}</a></span>
-        <span class="comments-link"><a href="#">4 评论</a></span>
+        <span class="comments-link"><a href="#comment-area">{{post.comment_set.count}} 评论</a></span>
         <span class="views-count"><a href="#">588 阅读</a></span>
       </div>
     </header>
@@ -21,8 +22,18 @@
       但是在后面加上 safe 过滤器后，渲染的值不再是 body 本身的值，而是由 safe 函数处理后返回的值。
       过滤器的用法是在模板变量后加一个 | 管道符号，再加上过滤器的名称。可以连续使用多个过滤器-->
     </div>
-  </article>
+</article>
+
+<section class="comment-area" id="comment-area">
+<h3>发表评论</h3>
+{% show_comment_form post %}
+<div class="comment-list-panel">
+  {% show_comments post %}
+</div>
+</section>
+
 {% endblock main %}
+
 
 
 

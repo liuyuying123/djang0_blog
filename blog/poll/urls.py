@@ -19,5 +19,5 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('blog.urls')),#将blog app的路由加到项目路由中
-
+    path('',include('comments.urls')),
 ]

@@ -12,6 +12,6 @@ class PostAdmin(admin.ModelAdmin):
         obj.author=request.user
         super().save_model(request,obj,form,change)
 
-admin.site.register(Post,PostAdmin)#使得后台能够修改Question表
+admin.site.register(Post,PostAdmin)#使得后台能够修改相应的表
 admin.site.register(Category)
 admin.site.register(Tag)

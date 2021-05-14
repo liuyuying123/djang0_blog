@@ -25,7 +25,7 @@ SECRET_KEY = '0t7%16bt=37k_ac6n$&1&yshlkyi%d73og687j0zc_hltjq_7a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogsConfig',
+    'comments.apps.CommentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -76,12 +77,8 @@ WSGI_APPLICATION = 'poll.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST':'127.0.0.1',
-        'PORt':3306,
-        'USER':'blog',
-        'PASSWORD':'liuyuying123',
-        'NAME':'blogs',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':os.path.join(BASE_DIR,'db.sqlite3'),
     },
 }
 
@@ -123,3 +120,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT=os.path.join(BASE_DIR,'static')

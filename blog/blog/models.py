@@ -57,6 +57,7 @@ class Post(models.Model):
     class Meta:
         verbose_name='文章'#verbose_name来指定对应的model在admin后台的显示名称
         verbose_name_plural=verbose_name#表示多篇文章时的复数显示形式
+        ordering=['-created_time']#用来指定文章的排序方式
     def __str__(self):
         return self.text_title
 
